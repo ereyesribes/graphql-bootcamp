@@ -6,11 +6,22 @@ import { GraphQLServer } from 'graphql-yoga';
 // Schema
 const typeDefs = `
   type Query {
+    me: User!
+    post: Post!
+  }
+
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    age: Int
+  }
+
+  type Post {
+    id: ID!
     title: String!
-    price: Float!
-    releaseYear: Int
-    rating: Float
-    inStock: Boolean!
+    body: String!
+    published: Boolean!
   }
 `;
 
@@ -19,20 +30,21 @@ const typeDefs = `
 // Resolvers
 const resolvers = {
   Query: {
-    title() {
-      return 'War of the Worlds';
+    me() {
+      return {
+        id: "123098",
+        name: "Mike",
+        email: "mike@example.com",
+        age: 28
+      };
     },
-    price() {
-      return 19.99;
-    },
-    releaseYear() {
-      return 1953;
-    },
-    rating() {
-      return 5.0;
-    },
-    inStock() {
-      return true;
+    post() {
+      return {
+        id: "473912",
+        title: "Titulo del post",
+        body: "Cuerpo del post",
+        published: true
+      };
     }
   }
 };
