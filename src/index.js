@@ -3,12 +3,35 @@
 import { GraphQLServer } from 'graphql-yoga';
 
 
+// Demo users
+const users = [
+  {
+    id: '1',
+    name: 'Javier Reyes',
+    email: 'jreyesribes@gmail.com'
+  },
+  {
+    id: '2',
+    name: 'Pepe',
+    email: 'pepe@example.com',
+    age: 20
+  },
+  {
+    id: '3',
+    name: 'Mike',
+    email: 'mike@example.com'
+  }
+];
+
+
 // Schema
 const typeDefs = `
   type Query {
     greeting(name:String): String!
     me: User!
     post: Post!
+    add(nums: [Float!]!): Float!
+    users(query: String): [User!]!
   }
 
   type User {
@@ -53,6 +76,25 @@ const resolvers = {
         body: "Cuerpo del post",
         published: true
       };
+    },
+    add(parent, args, ctx, info) {
+      if (args.num.length > 0) {
+        return args.num.reduce((accum, curr) => {
+          return accum + curr;
+        });
+      } else {
+        return 0;
+      }
+    },
+
+    users(parent, args, ctx, info) {
+      if (!args.query) {
+        return users;
+      }
+
+      return users.filter((user) => {
+        return user.name.toLowerCase().includes(args.query);
+      });
     }
   }
 };
