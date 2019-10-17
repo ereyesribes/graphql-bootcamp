@@ -117,7 +117,7 @@ const resolvers = {
       }
 
       return users.filter((user) => {
-        return user.name.toLowerCase().includes(args.query);
+        return user.name.toLowerCase().includes(args.query.toLowerCase());
       });
     },
 
@@ -127,7 +127,11 @@ const resolvers = {
       }
 
       return posts.filter((post) => {
-        return post.title.toLowerCase().includes(args.query);
+        const
+          isTitleMatch = post.title.toLowerCase().includes(args.query.toLowerCase()),
+          isBodyMatch = post.body.toLowerCase().includes(args.query.toLowerCase());
+
+        return isTitleMatch || isBodyMatch;
       });
     }
   }
