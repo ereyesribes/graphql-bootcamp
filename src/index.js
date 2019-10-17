@@ -6,11 +6,11 @@ import { GraphQLServer } from 'graphql-yoga';
 // Schema
 const typeDefs = `
   type Query {
-    id: ID!
-    name: String!
-    age: Int!
-    employed: Boolean!
-    gpa: Float
+    title: String!
+    price: Float!
+    releaseYear: Int
+    rating: Float
+    inStock: Boolean!
   }
 `;
 
@@ -19,20 +19,20 @@ const typeDefs = `
 // Resolvers
 const resolvers = {
   Query: {
-    id() {
-      return 'abc123';
+    title() {
+      return 'War of the Worlds';
     },
-    name() {
-      return 'Javier Reyes'
+    price() {
+      return 19.99;
     },
-    age() {
-      return 23;
+    releaseYear() {
+      return 1953;
     },
-    employed() {
+    rating() {
+      return 5.0;
+    },
+    inStock() {
       return true;
-    },
-    gpa() {
-      return null;
     }
   }
 };
