@@ -23,6 +23,29 @@ const users = [
   }
 ];
 
+// Demo posts
+
+const posts = [
+  {
+    id: '1',
+    title: 'First post test',
+    body: '',
+    published: false
+  },
+  {
+    id: '2',
+    title: 'Second post test',
+    body: 'Content of my second post',
+    published: true
+  },
+  {
+    id: '3',
+    title: 'Third post',
+    body: 'Content of the third post',
+    published: true
+  },
+]
+
 
 // Schema
 const typeDefs = `
@@ -32,6 +55,7 @@ const typeDefs = `
     post: Post!
     add(nums: [Float!]!): Float!
     users(query: String): [User!]!
+    posts(query: String): [Post!]!
   }
 
   type User {
@@ -94,6 +118,16 @@ const resolvers = {
 
       return users.filter((user) => {
         return user.name.toLowerCase().includes(args.query);
+      });
+    },
+
+    posts(parent, args, ctx, info) {
+      if (!args.query) {
+        return posts;
+      }
+
+      return posts.filter((post) => {
+        return post.title.toLowerCase().includes(args.query);
       });
     }
   }
