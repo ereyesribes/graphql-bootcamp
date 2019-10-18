@@ -30,19 +30,22 @@ const posts = [
     id: '1',
     title: 'First post test',
     body: '',
-    published: false
+    published: false,
+    author: '1'
   },
   {
     id: '2',
     title: 'Second post test',
     body: 'Content of my second post',
-    published: true
+    published: true,
+    author: '1'
   },
   {
     id: '3',
     title: 'Third post',
     body: 'Content of the third post',
-    published: true
+    published: true,
+    author: '2'
   },
 ]
 
@@ -70,6 +73,7 @@ const typeDefs = `
     title: String!
     body: String!
     published: Boolean!
+    author: User!
   }
 `;
 
@@ -132,6 +136,13 @@ const resolvers = {
           isBodyMatch = post.body.toLowerCase().includes(args.query.toLowerCase());
 
         return isTitleMatch || isBodyMatch;
+      });
+    },
+  },
+  Post: {
+    author(parent, args, ctx, info) {
+      return users.find((user) => {
+        return user.id === parent.author;
       });
     }
   }
