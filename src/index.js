@@ -47,6 +47,27 @@ const posts = [
     published: true,
     author: '2'
   },
+];
+
+// Demo comments.
+
+const comments = [
+  {
+    id: '1',
+    text: 'First comment'
+  },
+  {
+    id: '2',
+    text: 'Second comment'
+  },
+  {
+    id: '3',
+    text: 'Third comment'
+  },
+  {
+    id: '4',
+    text: 'Fourth comment'
+  },
 ]
 
 
@@ -59,6 +80,7 @@ const typeDefs = `
     add(nums: [Float!]!): Float!
     users(query: String): [User!]!
     posts(query: String): [Post!]!
+    comments: [Comment!]!
   }
 
   type User {
@@ -75,6 +97,11 @@ const typeDefs = `
     body: String!
     published: Boolean!
     author: User!
+  }
+
+  type Comment {
+    id: ID!
+    text: String!
   }
 `;
 
@@ -139,6 +166,9 @@ const resolvers = {
         return isTitleMatch || isBodyMatch;
       });
     },
+    comments() {
+      return comments;
+    }
   },
   Post: {
     author(parent, args, ctx, info) {
