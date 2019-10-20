@@ -1,7 +1,7 @@
 "use strict";
 
 import { GraphQLServer } from 'graphql-yoga';
-
+import uuidv4 from 'uuid/v4';
 
 // Demo users
 const users = [
@@ -89,6 +89,10 @@ const typeDefs = `
     users(query: String): [User!]!
     posts(query: String): [Post!]!
     comments: [Comment!]!
+  }
+
+  type Mutation {
+    createUser(name: String!, email: String! age: Int): User!
   }
 
   type User {
@@ -216,6 +220,27 @@ const resolvers = {
       return posts.find((post) => {
         return post.id === parent.post;
       });
+    }
+  },
+
+  Mutation: {
+    createUser(parent, args, ctx, info) {
+      const emailTaken = users.some((user) => user.email === args.email );
+
+      if (emailTaken) {
+        throw new Error('email taken.');
+      }
+
+      const user = {
+        id: uuidv4(),
+        name: args.name,
+        email: args.email,
+        age: args.age
+      };
+
+      users.push(user);
+
+      return user;
     }
   },
 };
