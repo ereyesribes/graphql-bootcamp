@@ -271,7 +271,7 @@ const resolvers = {
         throw new Error('User not found!');
       }
 
-      const postExists = users.some((post) => post.id === args.post );
+      const postExists = users.some((post) => post.id === args.post && post.published );
 
       if (!postExists) {
         throw new Error('Post not found!');
