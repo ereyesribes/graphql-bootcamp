@@ -1,28 +1,33 @@
 
 const Subscription = {
   count: {
-    subscribe(psrents, args, { pub_sub }, info) {
+    subscribe(psrents, args, { pubSub }, info) {
       let count = 0;
 
       setInterval(() => {
         count++;
-        pub_sub.publish('count', {
+        pubSub.publish('count', {
           count
         });
       }, 1000);
 
-      return pub_sub.asyncIterator('count');
+      return pubSub.asyncIterator('count');
     }
   },
   comment: {
-    subscribe(parent, { postId }, { db, pub_sub }, info) {
+    subscribe(parent, { postId }, { db, pubSub }, info) {
       const post = db.posts.find((post) => post.id === postId && post.published);
 
       if (!post) {
         throw new Error("Post not found!");
       }
 
-      return pub_sub.asyncIterator(`comment ${postId}`);
+      return pubSub.asyncIterator(`comment ${postId}`);
+    }
+  },
+  post: {
+    subscribe(parent, args, { pubSub }, info) {
+      return pubSub.asyncIterator('post');
     }
   }
 };

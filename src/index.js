@@ -11,7 +11,7 @@ import User from './resolvers/User.js';
 import Post from './resolvers/Post.js';
 import Comment from './resolvers/Comment.js';
 
-const pub_sub = new PubSub()
+const pubSub = new PubSub()
 
 
 const server = new GraphQLServer({
@@ -26,7 +26,7 @@ const server = new GraphQLServer({
   },
   context: {
     db,
-    pub_sub
+    pubSub
   }
 });
 
